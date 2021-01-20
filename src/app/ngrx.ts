@@ -1,31 +1,32 @@
-import { Action } from '@ngrx/store'
+import { createAction, createReducer, on, props } from '@ngrx/store'
 
 enum TypeAction{
     Increment = 'Increment',
     Decrement = 'Decrement'
 }
 
-export class Decrement implements Action {
-    readonly type = TypeAction.Decrement
-}
+export const decrement = createAction(
+    TypeAction.Decrement,
+    props<{payload: number}>()
+)
 
-export class Increment implements Action {
-    readonly type = TypeAction.Increment
-} 
+export const increment = createAction(
+    TypeAction.Increment,
+    props<{payload: number}>()
+)
 
 const INITIAL_STATE = { 
     counter: 0 
 }
 
-export const reducer = (state = INITIAL_STATE, action: any) => {
-    
-    switch (action.type) {
-        case TypeAction.Decrement:
-            return { ... state, counter: state.counter - 1 }
-        case TypeAction.Increment:
-            return { ... state, counter: state.counter + 1 }
-        default:
-            return state
-    }
-
-}
+export const reducer = createReducer(
+    INITIAL_STATE,
+    on(increment, (state, { payload }) => ({
+        ...state,
+        counter: state.counter + payload
+    })),
+    on(decrement,  (state, { payload }) => ({
+        ...state,
+        counter: state.counter - payload
+    }))
+)

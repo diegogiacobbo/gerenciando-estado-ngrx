@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Decrement, Increment } from '../ngrx';
+import { decrement, increment } from '../ngrx';
 
 @Component({
   selector: 'app-counter',
@@ -22,15 +22,25 @@ export class CounterComponent implements OnInit {
     )
   }
 
+  //Here... I would get the return statement from services
   decrement() {
     this.store.dispatch(
-      new Decrement
+      decrement(
+        {
+          payload: 3
+        }
+      )
     )
   }
 
+  //Here... I would get the return statement from services 
   increment() {
     this.store.dispatch(
-      new Increment
+      increment(
+        {
+          payload: 3
+        }
+      )
     )
   }
 }
